@@ -48,26 +48,28 @@ function App() {
 
   return (
     <div className="relative">
-      <h1 className="mt-16 text-center text-6xl font-bold" aria-hidden={sticky}>
+      <h1
+        className="mt-4 px-2 text-center text-6xl font-bold md:mt-16"
+        aria-hidden={sticky}
+      >
         Intl API Cheat Sheet
       </h1>
       <header
-        className={cx("sticky flex top-0 mx-auto bg-white z-10 pb-4", {
-          "shadow-md": sticky,
-        })}
-      >
-        <div
-          className={cx("absolute bottom-0 w-full transition-all ease-in-out", {
-            "bg-black h-px scale-x-100 opacity-100": sticky,
-            "rounded-b-full bg-white scale-x-0 opacity-0": !sticky,
-          })}
-        />
-        {sticky && (
-          <h1 className="absolute left-2 top-2 font-bold">
-            Intl API Cheat sheet
-          </h1>
+        className={cx(
+          "sticky flex justify-between flex-wrap top-0 mx-auto bg-white z-10 pb-4",
+          {
+            "shadow-md": sticky,
+          }
         )}
-        <div className="relative mx-auto bg-white pt-4">
+      >
+        <h1
+          className={cx("pt-2 pl-2 font-bold w-48", {
+            invisible: !sticky,
+          })}
+        >
+          Intl API Cheat sheet
+        </h1>
+        <div className="relative mx-auto flex-none bg-white px-4 pt-4">
           <label className="absolute left-3 top-1 block bg-white  px-1 text-black">
             Locale
           </label>
@@ -84,6 +86,14 @@ function App() {
             list="codes"
           />
         </div>
+        <div className="h-full w-48"></div>
+
+        <div
+          className={cx("absolute bottom-0 w-full transition-all ease-in-out", {
+            "bg-black h-px scale-x-100 opacity-100": sticky,
+            "rounded-b-full bg-white scale-x-0 opacity-0": !sticky,
+          })}
+        />
       </header>
       <main className="mx-auto my-16 flex max-w-3xl flex-col px-4">
         <datalist id="codes">

@@ -20,7 +20,7 @@ const date = new Date();
 function App() {
   const [sticky, setSticky] = useState(false);
 
-  const [locale, setLocale] = useState("en-GB");
+  const [locale, setLocale] = useState("sv-SE");
   const [copied, setCopied] = useState("");
 
   useEffect(() => {
@@ -67,7 +67,7 @@ function App() {
               languageSet.has(locale) ? "ring-blue-600" : "ring-red-600"
             )}
             type="text"
-            defaultValue="en-GB"
+            defaultValue={locale}
             onChange={(e) => {
               setLocale(e.target.value);
             }}

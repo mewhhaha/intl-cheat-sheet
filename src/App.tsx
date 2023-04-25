@@ -5,7 +5,9 @@ import { IconCopy } from "./icons/IconCopy";
 
 const lengths = ["short", "medium", "long", "full"] as const;
 
-const formats = lengths.flatMap((ds) => {
+const dates = lengths.map((ds) => ({ dateStyle: ds, timeStyle: undefined }));
+const times = lengths.map((ts) => ({ dateStyle: undefined, timeStyle: ts }));
+const mixed = lengths.flatMap((ds) => {
   return lengths.map((ts) => {
     return {
       dateStyle: ts,
@@ -13,6 +15,7 @@ const formats = lengths.flatMap((ds) => {
     };
   });
 });
+const formats = [...dates, ...times, ...mixed];
 
 const languageSet = new Set(languages);
 const date = new Date();
@@ -87,7 +90,10 @@ function App() {
         </datalist>
         <ul className="flex flex-col items-center gap-10">
           {formats.map((format) => {
-            const label = `${format.dateStyle}, ${format.timeStyle}`;
+            const label = [format.dateStyle, format.timeStyle]
+              .filter(Boolean)
+              .join(", ");
+
             const json = JSON.stringify(format);
             return (
               <li

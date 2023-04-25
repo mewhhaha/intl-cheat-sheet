@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { languages } from "./languages";
 import cx from "clsx";
 import { IconCopy } from "./icons/IconCopy";
@@ -38,7 +38,7 @@ function App() {
 
   return (
     <div className="relative">
-      <h1 className="text-6xl font-bold text-center mt-16" aria-hidden={sticky}>
+      <h1 className="mt-16 text-center text-6xl font-bold" aria-hidden={sticky}>
         Intl API Cheat Sheet
       </h1>
       <header
@@ -53,12 +53,12 @@ function App() {
           })}
         />
         {sticky && (
-          <h1 className="font-bold absolute left-2 top-2">
+          <h1 className="absolute left-2 top-2 font-bold">
             Intl API Cheat sheet
           </h1>
         )}
-        <div className="relative pt-4 mx-auto bg-white">
-          <label className="block absolute top-1 px-1 text-black  left-3 bg-white">
+        <div className="relative mx-auto bg-white pt-4">
+          <label className="absolute left-3 top-1 block bg-white  px-1 text-black">
             Locale
           </label>
           <input
@@ -75,7 +75,7 @@ function App() {
           />
         </div>
       </header>
-      <main className="mx-auto max-w-3xl px-4 flex flex-col my-16">
+      <main className="mx-auto my-16 flex max-w-3xl flex-col px-4">
         <datalist id="codes">
           {languages.map((language) => {
             return (
@@ -92,35 +92,32 @@ function App() {
             return (
               <li
                 key={label}
-                className="max-w-xl group relative border rounded-md p-4 w-full"
+                className="group relative w-full max-w-xl rounded-md border p-4"
               >
                 <label className="px-4">{label}</label>
-                <div className="text-2xl px-4 py-1">
+                <div className="px-4 py-1 text-2xl">
                   {languageSet.has(locale) ? (
                     <p>{date.toLocaleString(locale, format)}</p>
                   ) : (
                     <p>{date.toISOString()}</p>
                   )}
                 </div>
-                <div
-                  className="absolute hidden group-hover:flex flex-col top-0 bottom-0 left-0 right-0
-                group-hover:cursor-copy"
-                >
+                <div className="absolute inset-0 hidden flex-col group-hover:flex group-hover:cursor-copy">
                   <button
                     onClick={() => {
                       setCopied(label);
                       navigator.clipboard.writeText(json);
                     }}
-                    className="w-full h-full active:scale-95"
+                    className="h-full w-full active:scale-95"
                     onMouseLeave={() => {
                       setCopied("");
                     }}
                   >
-                    <div className="opacity-50 h-full">
-                      <pre className="bg-gray-400 w-full h-full text-start group-hover:bg-black rounded-sm text-white">
+                    <div className="h-full opacity-50">
+                      <pre className="h-full w-full rounded-sm bg-gray-400 text-start text-white group-hover:bg-black">
                         {json}
                       </pre>
-                      <div className="right-2 top-2 text-transparent group-hover:text-white absolute">
+                      <div className="absolute right-2 top-2 text-transparent group-hover:text-white">
                         <IconCopy />
                       </div>
                     </div>

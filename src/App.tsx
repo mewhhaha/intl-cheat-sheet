@@ -5,9 +5,16 @@ import { IconCopy } from "./icons/IconCopy";
 
 const lengths = ["short", "medium", "long", "full"] as const;
 
-const dates = lengths.map((ds) => ({ dateStyle: ds, timeStyle: undefined }));
-const times = lengths.map((ts) => ({ dateStyle: undefined, timeStyle: ts }));
-const mixed = lengths.flatMap((ds) => {
+type Options = {
+  dateStyle?: (typeof lengths)[number];
+  timeStyle?: (typeof lengths)[number];
+}[];
+
+const dates: Options = lengths.map((ds) => ({
+  dateStyle: ds,
+}));
+const times: Options = lengths.map((ts) => ({ timeStyle: ts }));
+const mixed: Options = lengths.flatMap((ds) => {
   return lengths.map((ts) => {
     return {
       dateStyle: ts,
@@ -102,7 +109,8 @@ function App() {
               >
                 <label className="px-4">{label}</label>
                 <div className="px-4 py-1 text-2xl">
-                  {languageSet.has(locale) ? (
+                  {languageSet.has(locale) &&
+                  (format.dateStyle || format.timeStyle) ? (
                     <p>{date.toLocaleString(locale, format)}</p>
                   ) : (
                     <p>{date.toISOString()}</p>

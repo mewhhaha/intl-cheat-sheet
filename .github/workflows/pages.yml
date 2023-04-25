@@ -3,13 +3,29 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
   upload_pages:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.5.2
 
-      - uses: pnpm/action-setup@v2.2.4
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2.2.4
         with:
           version: 8.3.1
 
@@ -19,6 +35,15 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - uses: actions/upload-pages-artifact@v1.0.8
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          path: dist
+          # Upload dist repository
+          path: "./dist"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1

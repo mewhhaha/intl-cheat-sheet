@@ -1,0 +1,23 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  upload_pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.3.1
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - uses: actions/upload-pages-artifact
+        with:
+          name: "Intl cheat sheet"
+          path: "./dist"

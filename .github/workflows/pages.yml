@@ -17,7 +17,6 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - uses: actions/upload-pages-artifact
+      - uses: actions/upload-pages-artifact@v1.0.8
         with:
-          name: "Intl cheat sheet"
           path: "./dist"
